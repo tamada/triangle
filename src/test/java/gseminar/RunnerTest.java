@@ -8,16 +8,16 @@ import java.io.PrintStream;
 
 import org.junit.jupiter.api.Test;
 
-public class RunnerTest {
+class RunnerTest {
     @Test
-    public void testArea() throws Exception {
+    void testArea() {
         Runner triangle = new Runner();
         assertThrows(RequiredValueMissingException.class, 
             () -> triangle.run("1,2".split(",")));
     }
 
     @Test
-    public void testMain() throws Exception {
+    void testMain() throws Exception {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         Runner.main("3,4,5".split(","));

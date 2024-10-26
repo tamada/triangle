@@ -8,7 +8,7 @@ import java.io.StringWriter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AreaTest {
+class AreaTest {
     private Area area;
 
     @BeforeEach
@@ -17,12 +17,12 @@ public class AreaTest {
     }
 
     @Test
-    public void testArea(){
+    void testArea(){
         assertEquals(13.0, area.area, 1E-6);
     }
 
     @Test
-    public void testPrintln(){
+    void testPrintln(){
         StringWriter out = new StringWriter();
         area.println(new PrintWriter(out));
         assertEquals("13.0" + System.getProperty("line.separator"), out.toString());

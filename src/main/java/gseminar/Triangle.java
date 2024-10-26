@@ -9,8 +9,10 @@ public class Triangle {
         this.sideA = sideA;
         this.sideB = sideB;
         this.sideC = sideC;
+        if (failOnNegativeValue(sideA, sideB, sideC))
+            throw new NegativeValueException(String.format("zero and negative value is not allowed (%d, %d, %d)", sideA, sideB, sideC));
         if (!isValid())
-            throw new NotTriangleException("not triangle");
+            throw new NotTriangleException(String.format("not triangle (%d, %d, %d)", sideA, sideB, sideC));
     }
 
     public Triangle(String sideAString, String sideBString, String sideCString){
@@ -48,7 +50,11 @@ public class Triangle {
         return minSide * minSide + midSide * midSide == maxSide * maxSide;
     }
 
+    private boolean failOnNegativeValue(int sideA, int sideB, int sideC){
+        return sideA <= 0 || sideB <= 0 || sideC <= 0;
+    }
+
     private boolean isValid(){
-        return (sideA + sideB) <= sideC || (sideA + sideC) <= sideB || (sideB + sideC) <= sideA;
+        return (sideA + sideB) > sideC && (sideA + sideC) > sideB && (sideB + sideC) > sideA;
     }
 }

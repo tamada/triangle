@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class NotTriangleExceptionTest {
+class NotTriangleExceptionTest {
     private Exception exception;
 
     @BeforeEach
@@ -15,7 +15,7 @@ public class NotTriangleExceptionTest {
     }
 
     @Test
-    public void testInstance(){
+    void testInstance(){
         assertInstanceOf(NotTriangleException.class, exception);
         assertEquals("message", exception.getMessage());
     }

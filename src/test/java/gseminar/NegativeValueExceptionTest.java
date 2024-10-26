@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class NegativeValueExceptionTest {
+class NegativeValueExceptionTest {
     private Exception exception;
 
     @BeforeEach
@@ -15,7 +15,7 @@ public class NegativeValueExceptionTest {
     }
 
     @Test
-    public void testInstance(){
+    void testInstance(){
         assertInstanceOf(NegativeValueException.class, exception);
         assertEquals("message", exception.getMessage());
     }

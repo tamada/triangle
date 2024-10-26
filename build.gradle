@@ -10,13 +10,15 @@ targetCompatibility = '1.8'
 [compileJava, compileTestJava]*.options*.encoding = 'utf-8'
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
     // 単体テスト用の設定．
     // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.3'
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.11.3'
 }
 
 jar{
@@ -37,19 +39,26 @@ tasks.withType(com.github.spotbugs.snom.SpotBugsTask) {
     }
 }
 
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+
+    finalizedBy jacocoTestReport
+}
+
 // 以降，jacoco の設定．
 jacocoTestReport {
     reports {
-        xml.required = false
-        csv.required = false
-        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+        xml.required = true
+        csv.required = true
+        html.required = true
     }
 }
 
 test {
     finalizedBy jacocoTestReport // report is always generated after tests run
 }
-jacocoTestReport {
-    dependsOn test // tests are required to run before generating the report
-}
+
 
