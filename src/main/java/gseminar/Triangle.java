@@ -1,49 +1,51 @@
 package gseminar;
 
 public class Triangle {
-    private int sideA;
-    private int sideB;
-    private int sideC;
+    private int maxSide;
+    private int minSide;
+    private int midSide;
 
     public Triangle(int sideA, int sideB, int sideC){
-        this.sideA = sideA;
-        this.sideB = sideB;
-        this.sideC = sideC;
+        this.maxSide = Math.max(sideA, Math.max(sideB, sideC));
+        this.minSide = Math.min(sideA, Math.min(sideB, sideC));
+        this.midSide = sideA + sideB + sideC - minSide - maxSide;
         if (failOnNegativeValue(sideA, sideB, sideC))
             throw new NegativeValueException(String.format("zero and negative value is not allowed (%d, %d, %d)", sideA, sideB, sideC));
-        if (!isValid())
+        if (!isValid(sideA, sideB, sideC))
             throw new NotTriangleException(String.format("not triangle (%d, %d, %d)", sideA, sideB, sideC));
     }
 
-    public Triangle(String sideAString, String sideBString, String sideCString){
-        this(parseSide(sideAString), parseSide(sideBString), parseSide(sideCString));
+    public boolean isEquilateral() {
+        return maxSide == minSide && minSide == midSide;
     }
 
     public boolean isRight() {
-        int minSide = Math.min(sideA, Math.min(sideB, sideC));
-        int maxSide = Math.max(sideA, Math.max(sideB, sideC));
-        int midSide = sideA + sideB + sideC - minSide - maxSide;
         return isRightWithPythagoreanTheorem(minSide, midSide, maxSide);
     }
 
-    public boolean isEquilateral() {
-        return sideA == sideB && sideB == sideC;
+    public boolean isObtuse(){
+        return maxSide * maxSide > minSide * minSide + midSide * midSide;
     }
 
+    public boolean isAcute() {
+        return maxSide * maxSide < minSide * minSide + midSide * midSide;
+    }
+
+    public boolean isIsosceles() {
+        return maxSide == minSide || maxSide == midSide || minSide == midSide;
+    }
+
+    public boolean isScalene() {
+        return maxSide != minSide && minSide != midSide;
+    }
 
     public Area calculateArea() {
-        return new Area(calculateAreaByHelonsFormula(sideA, sideB, sideC));
+        return new Area(calculateAreaByHelonsFormula(maxSide, minSide, midSide));
     }
 
     private double calculateAreaByHelonsFormula(int sideA, int sideB, int sideC){
         double s = (sideA + sideB + sideC) / 2.0;
         return Math.sqrt(s * (s - sideA) * (s - sideB) * (s - sideC));
-    }
-
-    private static int parseSide(String value){
-        int side = Integer.valueOf(value);
-        if(side <= 0) throw new NegativeValueException("negative value is not allowed");
-        return side;
     }
 
     private boolean isRightWithPythagoreanTheorem(int minSide, int midSide, int maxSide){
@@ -54,7 +56,7 @@ public class Triangle {
         return sideA <= 0 || sideB <= 0 || sideC <= 0;
     }
 
-    private boolean isValid(){
+    private boolean isValid(int sideA, int sideB, int sideC){
         return (sideA + sideB) > sideC && (sideA + sideC) > sideB && (sideB + sideC) > sideA;
     }
 }

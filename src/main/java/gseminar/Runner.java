@@ -15,7 +15,9 @@ public class Runner {
     private Triangle parseEachSides(String[] args) {
         if(args.length != 3)
             throw new RequiredValueMissingException("missing");
-        return new Triangle(args[0], args[1], args[2]);
+        return new Triangle(Integer.valueOf(args[0]),
+                Integer.valueOf(args[1]),
+                Integer.valueOf(args[2]));
     }
 
     private PrintWriter createPrintWriter(PrintStream out) throws IOException {

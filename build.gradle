@@ -39,12 +39,8 @@ tasks.withType(com.github.spotbugs.snom.SpotBugsTask) {
     }
 }
 
-test {
+test { // jacoco でのカバレッジレポートを出力するために以下の2行が必要となる．
     useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
-
     finalizedBy jacocoTestReport
 }
 
@@ -56,9 +52,3 @@ jacocoTestReport {
         html.required = true
     }
 }
-
-test {
-    finalizedBy jacocoTestReport // report is always generated after tests run
-}
-
-
